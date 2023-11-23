@@ -2,13 +2,13 @@
 - hosts: mywebservers
   become: yes
   tasks:
-  
-  - name: openjdk-11-jdk
-    state: present
-    update_cache: yes
-    force_apt_get: yes
-    cache_valid_time: 3600
-    when: "'ubuntu' in inventory_hostname"
+  - name: install java on ubuntu 
+    apt:
+      name: "{{myjavapackonubuntu}}"
+      state: present
+      update_cache: yes
+    when: ansible_os_family == "Debian"
+ 
 
   - name: install java on redhat
     dnf:
