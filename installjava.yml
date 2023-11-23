@@ -2,7 +2,7 @@
 - hosts: mywebservers
   become: yes
   vars:
-    myjavapackonubuntu: openjdk-13-jdk
+    myjavapackonubuntu: default-jdk
 
   tasks:
     - name: Update package lists on Ubuntu
@@ -10,7 +10,7 @@
         update_cache: yes
       when: ansible_os_family == "Debian"
 
-    - name: Install Java on Ubuntu 
+    - name: Install Java on Ubuntu
       apt:
         name: "{{ myjavapackonubuntu }}"
         state: present
