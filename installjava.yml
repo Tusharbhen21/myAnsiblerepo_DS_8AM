@@ -1,24 +1,15 @@
 ---
 - hosts: mywebservers
   become: yes
-  vars:
-    myjavapackonubuntu: default-jdk
-
   tasks:
-    - name: Update package lists on Ubuntu
-      apt:
-        update_cache: yes
-      when: ansible_os_family == "Debian"
+  - name: install java on ubuntu 
+    apt:
+      name: "{{myjavapackonubuntu}}"
+      state: present
+    when: ansible_os_family == "Debian"
 
-    - name: Install Java on Ubuntu
-      apt:
-        name: "{{ myjavapackonubuntu }}"
-        state: present
-        update_cache: yes
-      when: ansible_os_family == "Debian"
-
-    - name: Install Java on Red Hat
-      dnf:
-        name: "{{ myjavapackonredhat }}"
-        state: present
-      when: ansible_os_family == "RedHat"
+  - name: install java on redhat
+    dnf:
+      name: "{{myjavapackonredhat}}"
+      state: present
+    when: ansible_os_family =="RedHat"
