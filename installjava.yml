@@ -2,14 +2,22 @@
 - hosts: mywebservers
   become: yes
   tasks:
-  - name: install java on ubuntu 
-    apt:
-      name: "{{myjavapackonubuntu}}"
-      state: present
-    when: ansible_os_family == "Debian"
+    - name: Gathering Facts
+      gather_facts: yes
 
-  - name: install java on redhat
-    dnf:
-      name: "{{myjavapackonredhat}}"
-      state: present
-    when: ansible_os_family =="RedHat"
+    - name: Update Package Cache on Ubuntu
+      apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Install Java on Ubuntu
+      apt:
+        name: "{{ myjavapackonubuntu }}"
+        state: present
+      when: ansible_os_family == 'Debian'
+
+    - name: Install Java on Red Hat
+      dnf:
+        name: "{{ myjavapackonredhat }}"
+        state: present
+      when: ansible_os_family == 'RedHat'
